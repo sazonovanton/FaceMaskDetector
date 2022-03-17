@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>404 | Facemask Detection Platform</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+
+		<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<span class="logo"><a href="{% url 'main:main' %}"><img src="{% static 'images/logo.png' %}" height="60vh" alt="" /></a></span>
+						<h1>Facemask Detection Platform</h1>
+            <h1>404. Page not found.</h1>
+					</header>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<p>This platform is a non-commercial project, it was created simply as an experiment for educational purposes. 
+							Build with <a href="https://www.djangoproject.com/" target="_blank">Django</a> and <a href="https://docs.docker.com/engine/" target="_blank">Docker</a>, inference based on <a href="https://github.com/ultralytics/yolov5" target="_blank">YOLOv5 by Ultralytics</a>, 
+							design of web pages based on Stellar by <a href="https://html5up.net" target="_blank">HTML5 UP</a>.</p>
+							<ul class="icons">
+								<li><a href="https://github.com/sazonovanton/" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/sazonovanton/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+							</ul>
+						</section>
+						<p class="copyright">&copy; Facemask Detection Platform. 2022</p>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>

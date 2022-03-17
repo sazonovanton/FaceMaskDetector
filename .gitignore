@@ -1,0 +1,13 @@
+.idea*
+.svn
+*.pyc
+*.class
+.DS_Store
+.project
+__pycache__/
+.vscode
+.venv/
+venv/
+basesettings.ini
+*.mp4
+*.webp

@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Documents | Facemask Detection Platform</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+
+		<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1>Facemask Detection Platform</h1>
+						<p>Documents</p>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+						{% if user.is_authenticated %}
+						<!-- Content -->
+							<section id="content" class="main">
+								<section>
+									<form action="{% url 'main:list' %}" method="post" enctype="multipart/form-data">
+										{% csrf_token %}
+										<h3 style="font-weight: 100">Upload video for processing</h3>
+										<input type="file" hidden="hidden" name="doc" accept="video/mp4,video/x-m4v,video/*" id="id_doc">
+										<button type="button" id="custom-button"  class="button icon solid fa-search" style="font-size: 0.8em; font-family: 'Source Sans Pro', Helvetica, sans-serif;">Choose file</button>
+										<span id="upload-text">No file selected</span>
+										<button type="submit" class="button icon solid fa-upload" style="font-size: 0.8em; font-family: 'Source Sans Pro', Helvetica, sans-serif;">Upload</button>
+									</form>
+								</section>	
+
+								<hr>
+
+								<!-- Table -->
+									<section>
+										<!-- <h2>Table</h2> -->
+										<h3>Files: {{ documents.count }}</h3>
+										{% if documents %}
+										<div class="table-wrapper">
+											<table>
+												<thead>
+													<tr>
+														<th>Original file</th>
+														<th>User</th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody>
+													{% for document in documents %}
+														<tr>
+															<td><a href="{{ document.doc.url }}" download>{{ document.filename }}</a></td>
+															<td>{{ document.user }}</td>
+															<td style="text-align: right;">
+																<ul class="icons" style="margin: 0 0 0.1em 0; ">
+																	{% if document.processed %}
+																	<li>
+																		<form action="{% url 'main:view' %}" method="post" enctype="multipart/form-data" style="margin: 0 0 0 0; ">
+																			{% csrf_token %}
+																			<a href="javascript:;" onclick="parentNode.submit();" value="Show processed" class="icon fa fa-eye"></a>
+																			<input type="hidden" name="doc" value="{{ document.pk }}"/>
+																		</form>
+																	</li>
+																	{% else %}
+																	<li>
+																		<form action="{% url 'main:process' %}" method="post" enctype="multipart/form-data" style="margin: 0 0 0 0; ">
+																			{% csrf_token %}
+																			<a href="javascript:;" onclick="parentNode.submit();" value="Process" class="fa fa-spinner"></a>
+																			<input type="hidden" name="doc" value="{{ document.pk }}"/>
+																		</form>
+																	</li>
+																	{% endif %}
+																	<li>
+																		<form action="{% url 'main:delete' %}" method="post" enctype="multipart/form-data" style="margin: 0 0 0 0; ">
+																			{% csrf_token %}
+																			<a href="javascript:;" onclick="parentNode.submit();" value="Delete" class="icon fa fa-trash-alt confirm-delete"></a>
+																			<input type="hidden" name="doc" value="{{ document.pk }}"/>
+																		</form>
+																	</li>
+																</ul>
+															</td>
+														</tr>
+													{% endfor %}
+											</table>
+											<p style="font-size: 0.8em; margin: 0 0 0.3em 0;">Video processing takes time and should be started manually</p>
+											<ul class="icons" style="font-size: 0.7em; ">
+												<li><p class="icon fa fa-trash-alt"></p> - Delete element</li>
+												<li><p class="fa fa-spinner"></p> - Process video</li>
+												<li><p class="icon fa fa-eye"></p> - View processed</li>
+											</ul>
+										</div>
+										{% else %}
+										<div>
+											<p>No files uploaded</p>
+										</div>
+										{% endif %}
+									</section>
+
+							</section>
+						
+						{% else %}
+						<section id="content" class="main">
+							<section>
+								<h2>Only authorized users have access to information</h2>
+								<div class="col-12">
+									<ul class="actions stacked">
+										<li><a href="{% url 'login'%}" class="button">Sign In</a></li>
+									</ul>
+								</div>
+							</section>
+						{% endif %}
+					</div>
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section>
+						<p>This platform is a non-commercial project, it was created simply as an experiment for educational purposes. 
+						Build with <a href="https://www.djangoproject.com/" target="_blank">Django</a> and <a href="https://docs.docker.com/engine/" target="_blank">Docker</a>, inference based on <a href="https://github.com/ultralytics/yolov5" target="_blank">YOLOv5 by Ultralytics</a>, 
+						design of web pages based on Stellar by <a href="https://html5up.net" target="_blank">HTML5 UP</a>.</p>
+						<ul class="icons">
+							<li><a href="https://github.com/sazonovanton/" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+							<li><a href="https://www.linkedin.com/in/sazonovanton/" class="icon brands fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+						</ul>
+					</section>
+					<section>
+						{% if user.is_authenticated %}
+							<p>Current user: {{user}}</p>
+						{% endif %}
+						<ul class="actions">
+							{% if user.is_superuser %}
+								<li><a href="{% url 'main:logs'%}" class="button small ">Logs</a></li>
+							{% endif %}
+							<li><a href="#" class="button small ">Help</a></li>
+							{% if user.is_authenticated %}
+								<li><a href="{% url 'logout'%}" class="button small primary">Sign Out</a></li>
+							{% endif %}
+						</ul>
+					</section>
+					<p class="copyright">&copy; Facemask Detection Platform. 2022</p>
+				</footer>
+
+		</div>
+
+	<!-- Scripts -->
+		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
+				
+		<script type="text/javascript">
+			const realFileBtn = document.getElementById("id_doc");
+			const customBtn = document.getElementById("custom-button");
+
+			customBtn.addEventListener("click", function() {
+				realFileBtn.click();
+			});
+
+			$(document).on('click', '.confirm-delete', function(){
+				return confirm('Are you sure you want to delete this file?');
+			})
+		</script>
+
+</body>
+</html>

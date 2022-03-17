@@ -1,0 +1,12 @@
+[Django]
+SecretKey=%0hwpjmeqkd#2bf62a+p!_oa6dcr@5-coi@f1$$msmo54!134l
+LanguageCode=en
+TimeZone=Europe/London
+
+[PostgreSQL]
+DbName=facemask_db
+DbUser=postgres
+DbPassword=Unfero343Qw
+Host=postgres_db
+Port=5432
+
